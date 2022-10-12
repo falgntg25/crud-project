@@ -2,6 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.5.
 
+## Descripcion
+
+angular project 13-crud. Based on Angular using the ngxs library to build a local store and perform crud better.
+
+## Tecnologias
+
+* [Angular CLI](https://angular.io/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [NGXS](https://www.ngxs.io/)
+* [Bootstrap](https://getbootstrap.com/)
+
+## Requisitos
+
+ * node >= 16.13.1
+ * typescript >= 4.7.2
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

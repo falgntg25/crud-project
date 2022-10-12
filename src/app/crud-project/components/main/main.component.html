@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <h2 class="title">Sistema De Usuario</h2>
+  <div class="row my-4">
+    <div class="col-md-3">
+      <h5 style="color: grey;">Agrega nuevo usuario</h5>
+      <form [formGroup]="userForm">
+        <label class="form-label">RUT</label>
+        <input [ngClass]="{'is-invalid': f['rut'].errors?.invalidRut && f['rut'].touched}" formControlName="rut"
+          maxlength="12" class="form-control mb-2" placeholder="Rut">
+        <div *ngIf="f['rut'].errors?.invalidRut && f['rut'].touched ">
+          <h5 style="color: red;">Ingresa Un Rut Valido</h5>
+        </div>
+        <label class="form-label">Nombre</label>
+        <input [ngClass]="{'is-invalid': f['name'].errors?.required && f['name'].touched}" formControlName="name"
+          class="form-control mb-2" maxlength="15" placeholder="Ingresa Tu Nombre">
+        <div *ngIf="f['name'].errors?.required && f['name'].touched ">
+          <h5 style="color: red;">Ingrese Su Nombre</h5>
+        </div>
+        <label class="form-label">Apellido</label>
+        <input [ngClass]="{'is-invalid': f['lastName'].errors?.required && f['lastName'].touched}"
+          formControlName="lastName" class="form-control mb-2" maxlength="15" placeholder="Ingresa Tu Apellido">
+        <div *ngIf="f['lastName'].errors?.required && f['lastName'].touched ">
+          <h5 style="color: red;">Ingresa Su Apellido</h5>
+        </div>
+        <label class="form-label">Email</label>
+        <input
+          [ngClass]="{'is-invalid': (f['email'].errors?.required || f['email'].errors?.email )&& f['email'].touched}"
+          formControlName="email" class="form-control mb-2" availableCharterPattern="[^A-Za-z0-9@_\-\.]*"
+          placeholder="example@abcd.com">
+        <div *ngIf="f['email'].errors?.required && f['email'].touched ">
+          <h5 style="color: red;">Ingresa Su Email</h5>
+        </div>
+        <div *ngIf="f['email'].errors?.email && f['email'].touched ">
+          <h5 style="color: red;">Ingrese Email Valido</h5>
+        </div>
+        <label class="form-label">Telefono</label>
+        <input [ngClass]="{'is-invalid': f['phoneNumber'].errors?.required && f['phoneNumber'].touched}"
+          formControlName="phoneNumber" (keypress)="onlyNumber($event)" class="form-control mb-2"
+          placeholder="Ingresa Tu Numero De Telefono">
+        <div *ngIf="f['phoneNumber'].errors?.required && f['phoneNumber'].touched ">
+          <h5 style="color: red;">Ingresa Su Telefono</h5>
+        </div>
+        <label class="form-label">Estado del usuario</label>
+        <select formControlName="state" class="form-select mb-2">
+          <option selected value="" disabled>Selecciona el estado del usuario</option>
+          <option *ngFor="let item of states" [value]="item">{{item}}</option>
+        </select>
+        <button [disabled]="userForm.invalid" class="btn btn-primary btn-sm mt-2" *ngIf="!editUser"
+          (click)="addUser()">Agrega Nuevo Usuario</button>
+        <button [disabled]="userForm.invalid" class="btn btn-warning btn-sm mt-2" *ngIf="editUser"
+          (click)="updateUser()">Edita Usuario</button>
+      </form>
+    </div>
+    <div class="col-md-9">
+      <h5 style="color: grey;">Informacion De Usuario</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Rut</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contents of userInfo; index as i">
+            <th scope="row">{{contents?.rut }}</th>
+            <td>{{contents?.name}}</td>
+            <td>{{contents?.lastName}}</td>
+            <td>{{contents?.email}}</td>
+            <td>{{contents?.number}}</td>
+            <td><button
+                [ngClass]="{'btn-outline-success': contents?.state === 'Disponible',
+               'btn-outline-danger' : contents?.state === 'Ocupado' , 'btn-outline-warning' : contents?.state === 'No Disponible' }"
+                class="btn btn-sm"><i class="bi bi-person-circle"></i></button>
+            </td>
+            <td><button class="btn btn-outline-warning btn-sm" (click)="updateUserForm(contents)"><i
+                  class="bi bi-pencil-fill"></i></button></td>
+            <td><button class="btn btn-danger btn-sm" (click)="deleteUser(contents.id)"><i
+                  class="bi bi-trash-fill"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+        aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            Hello, world! This is a toast message.
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+            aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
